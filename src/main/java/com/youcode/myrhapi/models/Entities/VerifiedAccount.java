@@ -4,16 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "agents")
-public class Agent {
+@Table(name = "verified_accounts")
+public class VerifiedAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+    private long code;
+    private LocalDateTime expiredAt;
     private String email;
-    private String password;
 }

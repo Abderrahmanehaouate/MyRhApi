@@ -1,2 +1,6 @@
-package com.youcode.myrhapi.services.interfaces;public interface AgentInterface {
+package com.youcode.myrhapi.services.interfaces;
+
+import com.youcode.myrhapi.models.Dtos.AgentDto.AgentDto;
+
+public interface AgentService extends BaseService<AgentDto>{
 }

@@ -1,2 +1,7 @@
-package com.youcode.myrhapi.models.Enums;public enum Status {
+package com.youcode.myrhapi.models.Enums;
+
+public enum Status {
+    ACCEPTED,
+    REFUSED,
+    PENDING
 }

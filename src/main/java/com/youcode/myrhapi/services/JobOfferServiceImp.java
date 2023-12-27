@@ -1,32 +1,64 @@
-package com.youcode.myrhapi.services.interfaces;
+package com.youcode.myrhapi.services;
 
 import com.youcode.myrhapi.models.Dtos.JobOfferDto.JobOfferDto;
+import com.youcode.myrhapi.models.Entities.JobOffer;
+import com.youcode.myrhapi.repositories.JobOfferRepository;
+import com.youcode.myrhapi.services.interfaces.JobOfferService;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class JobOfferServiceImp implements JobOfferService{
+@Service
+public class JobOfferServiceImp implements JobOfferService {
+    private final JobOfferRepository jobOfferRepository;
+    private final ModelMapper modelMapper;
+
+    public JobOfferServiceImp(JobOfferRepository jobOfferRepository, ModelMapper modelMapper) {
+        this.jobOfferRepository = jobOfferRepository;
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public List<JobOfferDto> getAll() {
-        return null;
+
+        List<JobOffer> jobOffers = jobOfferRepository.findAll();
+
+        return jobOffers.stream()
+                .map(JobOffer -> modelMapper.map(JobOffer, JobOfferDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public JobOfferDto getById(Long id) {
-        return null;
+    public Optional<JobOfferDto> getById(Long id) {
+
+        JobOffer jobOffer = jobOfferRepository.findById(id).orElse(null);
+
+        return Optional.ofNullable(modelMapper.map(jobOffer, JobOfferDto.class));
     }
 
     @Override
-    public JobOfferDto create(JobOfferDto item) {
-        return null;
+    public Optional<JobOfferDto> create(JobOfferDto item) {
+
+        JobOffer jobOffer = modelMapper.map(item, JobOffer.class);
+        JobOffer savedJobOffer = jobOfferRepository.save(jobOffer);
+
+        return Optional.ofNullable(modelMapper.map(savedJobOffer, JobOfferDto.class));
     }
 
     @Override
-    public JobOfferDto update(JobOfferDto item) {
-        return null;
+    public Optional<JobOfferDto> update(JobOfferDto item) {
+
+        JobOffer jobOffer = modelMapper.map(item, JobOffer.class);
+        JobOffer savedJobOffer = jobOfferRepository.save(jobOffer);
+
+        return Optional.ofNullable(modelMapper.map(savedJobOffer, JobOfferDto.class));
     }
 
     @Override
     public void deleteById(Long id) {
-
+        jobOfferRepository.deleteById(id);
     }
 }
