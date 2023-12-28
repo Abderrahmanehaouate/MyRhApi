@@ -5,6 +5,9 @@ import com.youcode.myrhapi.models.Entities.JobOffer;
 import com.youcode.myrhapi.repositories.JobOfferRepository;
 import com.youcode.myrhapi.services.interfaces.JobOfferService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,15 @@ public class JobOfferServiceImp implements JobOfferService {
         this.modelMapper = modelMapper;
     }
 
+    @Override
+    public List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy) {
+
+        Page<JobOffer> jobOffers = jobOfferRepository.findAll(PageRequest.of(page, pageSize, Sort.by(sortBy)));
+
+        return jobOffers.stream()
+                .map(JobOffer -> modelMapper.map(JobOffer, JobOfferDto.class))
+                .collect(Collectors.toList());
+    }
     @Override
     public List<JobOfferDto> getAll() {
 
@@ -61,4 +73,5 @@ public class JobOfferServiceImp implements JobOfferService {
     public void deleteById(Long id) {
         jobOfferRepository.deleteById(id);
     }
+
 }

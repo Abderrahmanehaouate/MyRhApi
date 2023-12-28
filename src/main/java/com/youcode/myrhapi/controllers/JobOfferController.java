@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -20,9 +21,11 @@ public class JobOfferController {
     }
 
     @GetMapping
-    public Iterable<JobOfferDto> getAllJobOffers(){
+    public List<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "2") int pageSize,
+                                             @RequestParam(defaultValue = "id") String sortBy){
 
-        return jobOfferService.getAll();
+        return jobOfferService.getAllJobOffers(page, pageSize, sortBy);
     }
 
     @GetMapping("/{id}")
@@ -31,13 +34,13 @@ public class JobOfferController {
         return jobOfferService.getById(id);
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     public Optional<JobOfferDto> createJobOffer(@RequestBody JobOfferDto jobOfferDto){
 
         return jobOfferService.create(jobOfferDto);
     }
 
-    @GetMapping("/update")
+    @PutMapping("/update")
     public Optional<JobOfferDto> updateJobOffer(@RequestBody JobOfferDto jobOfferDto){
 
         return jobOfferService.update(jobOfferDto);

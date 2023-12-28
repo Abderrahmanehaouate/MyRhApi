@@ -6,11 +6,15 @@ import com.youcode.myrhapi.repositories.AgentRepository;
 import com.youcode.myrhapi.services.interfaces.AgentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AgentServiceImp implements AgentService {
@@ -24,15 +28,19 @@ public class AgentServiceImp implements AgentService {
         this.modelMapper = modelMapper;
     }
 
+
     @Override
-    public List<AgentDto> getAll() {
+    public List<AgentDto> getAllAgents(int page, int pageSize, String sortBy){
 
-        List<Agent> agents = agentRepository.findAll();
+            Pageable paging = PageRequest.of(page, pageSize, Sort.by(sortBy));
 
-        return agents.stream()
-                .map(Agent -> modelMapper.map(Agent, AgentDto.class))
-                .collect(java.util.stream.Collectors.toList());
+            Page<Agent> agents = agentRepository.findAll(paging);
+
+            return agents.stream()
+                    .map(Agent -> modelMapper.map(Agent, AgentDto.class))
+                    .collect(Collectors.toList());
     }
+
 
     @Override
     public Optional<AgentDto> getById(Long id) {
@@ -58,6 +66,11 @@ public class AgentServiceImp implements AgentService {
         Agent savedAgent = agentRepository.save(agent);
 
         return Optional.ofNullable(modelMapper.map(savedAgent, AgentDto.class));
+    }
+
+    @Override
+    public List<AgentDto> getAll() {
+        return null;
     }
 
     @Override

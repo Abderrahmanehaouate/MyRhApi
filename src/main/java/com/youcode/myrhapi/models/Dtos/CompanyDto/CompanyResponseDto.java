@@ -8,9 +8,6 @@ import lombok.Setter;
 public class CompanyResponseDto {
     private Long id;
     private String name;
-    private String description;
-    private String phone;
     private String email;
-    private String login;
-    private String image;
+    private String phone;
 }

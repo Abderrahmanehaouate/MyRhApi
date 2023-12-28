@@ -21,9 +21,9 @@ public class AgentController {
         this.agentService = agentService;
     }
     @GetMapping
-    public List<AgentDto> getAllAgents(){
+    public List<AgentDto> getAllAgents(@PathVariable int page, @PathVariable int pageSize, @PathVariable String sortBy){
 
-        return agentService.getAll();
+        return agentService.getAllAgents(page, pageSize, sortBy);
     }
     @GetMapping("/{id}")
     public Optional<AgentDto> getAgentById(@PathVariable Long id){
