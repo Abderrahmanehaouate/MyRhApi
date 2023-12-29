@@ -3,14 +3,13 @@ package com.youcode.myrhapi.controllers;
 import com.youcode.myrhapi.models.Dtos.JobOfferDto.JobOfferDto;
 import com.youcode.myrhapi.services.interfaces.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1/jobOffers")
 public class JobOfferController {
     private final JobOfferService jobOfferService;
@@ -22,10 +21,11 @@ public class JobOfferController {
 
     @GetMapping
     public List<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "2") int pageSize,
-                                             @RequestParam(defaultValue = "id") String sortBy){
+                                             @RequestParam(defaultValue = "2") int size,
+                                             @RequestParam(defaultValue = "id.desc") String sortBy,
+                                             @RequestParam(defaultValue = "") String search){
 
-        return jobOfferService.getAllJobOffers(page, pageSize, sortBy);
+        return jobOfferService.getAllJobOffers(page, size, sortBy, search);
     }
 
     @GetMapping("/{id}")
@@ -45,5 +45,4 @@ public class JobOfferController {
 
         return jobOfferService.update(jobOfferDto);
     }
-
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface JobOfferService extends BaseService<JobOfferDto>{
 
-    List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy);
+    List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search);
 }

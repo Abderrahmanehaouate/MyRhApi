@@ -8,6 +8,8 @@ import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class JobOfferResponseDto {
@@ -16,6 +18,7 @@ public class JobOfferResponseDto {
     private String description;
     private String profile;
     private String city;
+    private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     private EducationLevel educationLevel;
     @Enumerated(EnumType.STRING)

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,9 +26,16 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Override
-    public List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy) {
+    public List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
+        String[] sortParams = sortBy.split(",");
+        String sortField = sortParams[0];
+        Sort.Direction sortDirection = Sort.Direction.ASC;
 
-        Page<JobOffer> jobOffers = jobOfferRepository.findAll(PageRequest.of(page, pageSize, Sort.by(sortBy)));
+        if (sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1])) {
+            sortDirection = Sort.Direction.DESC;
+        }
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortDirection, sortField));
+        Page<JobOffer> jobOffers = jobOfferRepository.findAll(pageRequest);
 
         return jobOffers.stream()
                 .map(JobOffer -> modelMapper.map(JobOffer, JobOfferDto.class))
@@ -53,7 +61,7 @@ public class JobOfferServiceImp implements JobOfferService {
 
     @Override
     public Optional<JobOfferDto> create(JobOfferDto item) {
-
+        item.setCreatedAt(LocalDateTime.now());
         JobOffer jobOffer = modelMapper.map(item, JobOffer.class);
         JobOffer savedJobOffer = jobOfferRepository.save(jobOffer);
 

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -18,6 +20,7 @@ public class JobOffer {
     private String description;
     private String profile;
     private String city;
+    private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     private EducationLevel educationLevel;
     @Enumerated(EnumType.STRING)
