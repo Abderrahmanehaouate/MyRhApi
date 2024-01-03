@@ -1,7 +1,9 @@
 package com.youcode.myrhapi.models.Dtos.JobOfferDto;
 
 import com.youcode.myrhapi.models.Dtos.CompanyDto.CompanyResponseDto;
+import com.youcode.myrhapi.models.Dtos.PostulationDto.PostulationResponseDto;
 import com.youcode.myrhapi.models.Entities.Company;
+import com.youcode.myrhapi.models.Entities.Postulation;
 import com.youcode.myrhapi.models.Enums.EducationLevel;
 import com.youcode.myrhapi.models.Enums.Status;
 import jakarta.persistence.Column;
@@ -11,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,5 +30,6 @@ public class JobOfferDto {
     private Status status;
     @Column(nullable = true)
     private String salary;
+
     private CompanyResponseDto company;
 }

@@ -3,6 +3,7 @@ package com.youcode.myrhapi.controllers;
 import com.youcode.myrhapi.models.Dtos.JobOfferDto.JobOfferDto;
 import com.youcode.myrhapi.services.interfaces.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class JobOfferController {
     }
 
     @GetMapping
-    public List<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
+    public Page<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "2") int size,
-                                             @RequestParam(defaultValue = "id.desc") String sortBy,
+                                             @RequestParam String sortBy,
                                              @RequestParam(defaultValue = "") String search){
 
         return jobOfferService.getAllJobOffers(page, size, sortBy, search);

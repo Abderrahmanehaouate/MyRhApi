@@ -1,7 +1,9 @@
 package com.youcode.myrhapi.services;
 
 import com.youcode.myrhapi.models.Dtos.JobOfferDto.JobOfferDto;
+import com.youcode.myrhapi.models.Entities.Company;
 import com.youcode.myrhapi.models.Entities.JobOffer;
+import com.youcode.myrhapi.repositories.CompanyRepository;
 import com.youcode.myrhapi.repositories.JobOfferRepository;
 import com.youcode.myrhapi.services.interfaces.JobOfferService;
 import org.modelmapper.ModelMapper;
@@ -15,18 +17,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.stream;
+
 @Service
 public class JobOfferServiceImp implements JobOfferService {
     private final JobOfferRepository jobOfferRepository;
+    private final CompanyRepository companyRepository;
     private final ModelMapper modelMapper;
 
-    public JobOfferServiceImp(JobOfferRepository jobOfferRepository, ModelMapper modelMapper) {
+    public JobOfferServiceImp(JobOfferRepository jobOfferRepository, CompanyRepository companyRepository, ModelMapper modelMapper) {
         this.jobOfferRepository = jobOfferRepository;
+        this.companyRepository = companyRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
+    public Page<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
         String[] sortParams = sortBy.split(",");
         String sortField = sortParams[0];
         Sort.Direction sortDirection = Sort.Direction.ASC;
@@ -37,9 +43,9 @@ public class JobOfferServiceImp implements JobOfferService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortDirection, sortField));
         Page<JobOffer> jobOffers = jobOfferRepository.findAll(pageRequest);
 
-        return jobOffers.stream()
-                .map(JobOffer -> modelMapper.map(JobOffer, JobOfferDto.class))
-                .collect(Collectors.toList());
+        Page<JobOfferDto> jobOfferDtos = jobOffers.map((element) -> modelMapper.map(element, JobOfferDto.class));
+
+        return jobOfferDtos;
     }
     @Override
     public List<JobOfferDto> getAll() {
@@ -61,8 +67,14 @@ public class JobOfferServiceImp implements JobOfferService {
 
     @Override
     public Optional<JobOfferDto> create(JobOfferDto item) {
+
         item.setCreatedAt(LocalDateTime.now());
+        item.getCompany().getId();
+
+        Company company = companyRepository.findById(item.getCompany().getId()).orElse(null);
+
         JobOffer jobOffer = modelMapper.map(item, JobOffer.class);
+        jobOffer.setCompany(company);
         JobOffer savedJobOffer = jobOfferRepository.save(jobOffer);
 
         return Optional.ofNullable(modelMapper.map(savedJobOffer, JobOfferDto.class));
