@@ -29,5 +29,4 @@ public class PostulationController {
     public Optional<PostulationDto> createPostulation(@RequestBody PostulationDto postulationDto){
         return postulationService.create(postulationDto);
     }
-
 }
