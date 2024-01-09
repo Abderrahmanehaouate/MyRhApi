@@ -47,9 +47,9 @@ public class JobOfferServiceTest {
 
         when(jobOfferRepository.findAll(pageRequest)).thenReturn(jobOfferPage);
 
-        Page<JobOfferDto> result = jobOfferService.getAllJobOffers(page, pageSize, sortBy, search);
+        List<JobOfferDto> result = jobOfferService.getAllJobOffers(page, pageSize, sortBy, search);
 
-        assertEquals(jobOfferList.size(), result.getContent().size());
+        assertEquals(jobOfferList.size(), result.size());
         verify(modelMapper, times(jobOfferList.size())).map(any(), eq(JobOfferDto.class));
     }
 

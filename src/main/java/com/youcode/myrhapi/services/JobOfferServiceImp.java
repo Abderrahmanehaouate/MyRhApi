@@ -7,6 +7,8 @@ import com.youcode.myrhapi.repositories.CompanyRepository;
 import com.youcode.myrhapi.repositories.JobOfferRepository;
 import com.youcode.myrhapi.services.interfaces.JobOfferService;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,7 +34,8 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Override
-    public Page<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
+    @Cacheable(value = "jobOfferList", key = "#root.methodName + #page + #pageSize + #sortBy + #search", unless = "#result == null")
+    public List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
         String[] sortParams = sortBy.split(",");
         String sortField = sortParams[0];
         Sort.Direction sortDirection = Sort.Direction.ASC;
@@ -45,19 +48,15 @@ public class JobOfferServiceImp implements JobOfferService {
 
         Page<JobOfferDto> jobOfferDtos = jobOffers.map((element) -> modelMapper.map(element, JobOfferDto.class));
 
-        return jobOfferDtos;
+        return jobOfferDtos.stream().collect(Collectors.toList());
     }
     @Override
     public List<JobOfferDto> getAll() {
-
-        List<JobOffer> jobOffers = jobOfferRepository.findAll();
-
-        return jobOffers.stream()
-                .map(JobOffer -> modelMapper.map(JobOffer, JobOfferDto.class))
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
+    @Cacheable(value = "jobOffer", key = "#id")
     public Optional<JobOfferDto> getById(Long id) {
 
         JobOffer jobOffer = jobOfferRepository.findById(id).orElse(null);
@@ -66,6 +65,7 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Override
+    @CacheEvict(value = {"jobOfferList", "jobOffer"}, allEntries = true)
     public Optional<JobOfferDto> create(JobOfferDto item) {
 
         item.setCreatedAt(LocalDateTime.now());
@@ -81,6 +81,7 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Override
+    @CacheEvict(value = "jobOffer", key = "#item", allEntries = true)
     public Optional<JobOfferDto> update(JobOfferDto item) {
 
         JobOffer jobOffer = modelMapper.map(item, JobOffer.class);
@@ -90,6 +91,7 @@ public class JobOfferServiceImp implements JobOfferService {
     }
 
     @Override
+    @CacheEvict(value = {"jobOfferList", "jobOffer"}, allEntries = true)
     public void deleteById(Long id) {
         jobOfferRepository.deleteById(id);
     }

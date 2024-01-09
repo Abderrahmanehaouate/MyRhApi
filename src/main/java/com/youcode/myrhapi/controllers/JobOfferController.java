@@ -15,15 +15,14 @@ import java.util.Optional;
 public class JobOfferController {
     private final JobOfferService jobOfferService;
 
-    @Autowired
     public JobOfferController(JobOfferService jobOfferService) {
         this.jobOfferService = jobOfferService;
     }
 
     @GetMapping
-    public Page<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "2") int size,
-                                             @RequestParam String sortBy,
+    public List<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "5") int size,
+                                             @RequestParam (defaultValue = "id,desc") String sortBy,
                                              @RequestParam(defaultValue = "") String search){
 
         return jobOfferService.getAllJobOffers(page, size, sortBy, search);
