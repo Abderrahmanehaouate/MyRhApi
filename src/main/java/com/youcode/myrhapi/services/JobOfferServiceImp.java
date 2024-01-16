@@ -35,7 +35,7 @@ public class JobOfferServiceImp implements JobOfferService {
 
     @Override
     @Cacheable(value = "jobOfferList", key = "#root.methodName + #page + #pageSize + #sortBy + #search", unless = "#result == null")
-    public List<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
+    public Page<JobOfferDto> getAllJobOffers(int page, int pageSize, String sortBy, String search) {
         String[] sortParams = sortBy.split(",");
         String sortField = sortParams[0];
         Sort.Direction sortDirection = Sort.Direction.ASC;
@@ -48,7 +48,7 @@ public class JobOfferServiceImp implements JobOfferService {
 
         Page<JobOfferDto> jobOfferDtos = jobOffers.map((element) -> modelMapper.map(element, JobOfferDto.class));
 
-        return jobOfferDtos.stream().collect(Collectors.toList());
+        return jobOfferDtos;
     }
     @Override
     public List<JobOfferDto> getAll() {
