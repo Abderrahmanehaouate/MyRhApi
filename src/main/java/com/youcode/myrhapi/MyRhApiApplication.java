@@ -10,5 +10,4 @@ public class MyRhApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(MyRhApiApplication.class, args);
     }
-
 }

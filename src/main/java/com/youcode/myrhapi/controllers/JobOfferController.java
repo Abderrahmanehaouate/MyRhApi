@@ -20,7 +20,7 @@ public class JobOfferController {
     }
 
     @GetMapping
-    public Page<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
+    public List<JobOfferDto> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "5") int size,
                                              @RequestParam (defaultValue = "id,desc") String sortBy,
                                              @RequestParam(defaultValue = "") String search){
