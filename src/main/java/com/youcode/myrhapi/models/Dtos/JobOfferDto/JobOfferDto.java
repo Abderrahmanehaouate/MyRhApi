@@ -29,7 +29,7 @@ public class JobOfferDto {
     @Enumerated(EnumType.STRING)
     private Status status;
     @Column(nullable = true)
-    private String salary;
+    private Long salary;
 
     private CompanyResponseDto company;
 }

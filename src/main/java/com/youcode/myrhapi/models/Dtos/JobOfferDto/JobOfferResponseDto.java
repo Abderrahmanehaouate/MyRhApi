@@ -24,5 +24,5 @@ public class JobOfferResponseDto {
     @Enumerated(EnumType.STRING)
     private Status status;
     @Column(nullable = true)
-    private String salary;
+    private Long salary;
 }

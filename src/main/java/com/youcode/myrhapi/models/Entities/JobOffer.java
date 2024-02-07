@@ -29,7 +29,7 @@ public class JobOffer {
     @Enumerated(EnumType.STRING)
     private Status status;
     @Column(nullable = true)
-    private String salary;
+    private Long salary;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

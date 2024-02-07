@@ -12,11 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Controller
 @RequestMapping("/api/v1/agents")
 public class AgentController {
     private  final AgentService agentService;
-    @Autowired
+
     public AgentController(AgentService agentService) {
         this.agentService = agentService;
     }
