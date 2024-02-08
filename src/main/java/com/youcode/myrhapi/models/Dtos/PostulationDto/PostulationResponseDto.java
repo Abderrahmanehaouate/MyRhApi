@@ -7,9 +7,6 @@ import lombok.Setter;
 @Setter
 public class PostulationResponseDto {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
     private String cv;
+    private boolean isActive;
 }

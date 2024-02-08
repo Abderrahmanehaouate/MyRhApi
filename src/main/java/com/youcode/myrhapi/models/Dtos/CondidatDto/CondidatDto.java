@@ -8,6 +8,7 @@ import lombok.Setter;
 public class CondidatDto {
     private Long id;
     private String firstName;
+    private String password;
     private String lastName;
     private String email;
     private String phone;

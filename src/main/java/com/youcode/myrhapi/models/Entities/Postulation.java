@@ -12,13 +12,14 @@ public class Postulation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
     private String cv;
+    private boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = "job_offer_id")
     private JobOffer jobOffer;
+
+    @ManyToOne
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
 }

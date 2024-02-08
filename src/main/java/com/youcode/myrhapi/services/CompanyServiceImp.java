@@ -87,8 +87,10 @@ public class CompanyServiceImp implements CompanyService{
         VerifiedAccount verifiedAccountOptional = verifiedAccountRepository.findByEmail(verifiedAccount.getEmail()).
                 orElseThrow(() -> new ApiRequestException("Email not found or already verified"));
 
-        Company notVerifiedCompanyAccount = companyRepository.findByEmail(verifiedAccount.getEmail()).
-                orElseThrow(() -> new ApiRequestException("Email not found, please sign up first"));
+        Company notVerifiedCompanyAccount = companyRepository.findByEmail(verifiedAccount.getEmail());
+        if(notVerifiedCompanyAccount == null){
+            throw new ApiRequestException("Email not found or already verified");
+        }
 
         LocalDateTime  expiredTime = verifiedAccountOptional.getExpiredAt();
         LocalDateTime startTimestamp = LocalDateTime.now();

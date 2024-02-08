@@ -18,6 +18,7 @@ public class JobOfferResponseDto {
     private String description;
     private String profile;
     private String city;
+    private String password;
     private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     private EducationLevel educationLevel;

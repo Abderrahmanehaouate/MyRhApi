@@ -15,8 +15,9 @@ public class CompanyDto {
     private String description;
     private String phone;
     private String email;
-    private String login;
+    private String password ;
     private String image;
+    private String role;
     private boolean isVerified;
 
     private List<JobOfferResponseDto> jobOffers;
