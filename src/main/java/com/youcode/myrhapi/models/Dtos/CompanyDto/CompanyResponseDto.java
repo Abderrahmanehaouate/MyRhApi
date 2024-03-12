@@ -9,9 +9,7 @@ public class CompanyResponseDto {
     private Long id;
     private String name;
     private String email;
-    private String password ;
     private String description;
-    private String role;
     private String phone;
 
 }

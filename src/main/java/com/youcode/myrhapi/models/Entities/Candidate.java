@@ -23,7 +23,8 @@ public class Candidate extends User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    private String phone;
+    private Boolean isBadged = false;
+    private Long rank;
 
     @ManyToOne
     @JoinColumn(name = "postulation_id")
@@ -41,21 +42,21 @@ public class Candidate extends User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

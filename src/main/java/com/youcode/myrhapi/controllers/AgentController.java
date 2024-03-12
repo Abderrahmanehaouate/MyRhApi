@@ -1,11 +1,7 @@
 package com.youcode.myrhapi.controllers;
 
-import com.youcode.myrhapi.exceptions.ApiException;
-import com.youcode.myrhapi.exceptions.ApiRequestException;
 import com.youcode.myrhapi.models.Dtos.AgentDto.AgentDto;
 import com.youcode.myrhapi.services.interfaces.AgentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +25,7 @@ public class AgentController {
 
         return agentService.getById(id);
     }
+
     @PostMapping("/create")
     public Optional<AgentDto> createAgent(@RequestBody AgentDto agentDto){
 

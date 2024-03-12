@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/condidats")
 @CrossOrigin("*")
 public class CandidateController {
+
     private final CandidateService candidateService;
 
     public CandidateController(CandidateService candidateService) {
         this.candidateService = candidateService;
     }
+
 }

@@ -31,6 +31,7 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         if (userDetails instanceof Candidate) {
             claims.put("role", "CANDIDATE");
+            claims.put("isBadged", ((Candidate) userDetails).getIsBadged());
         } else if (userDetails instanceof Company) {
             claims.put("role", "COMPANY");
         } else if (userDetails instanceof Agent) {

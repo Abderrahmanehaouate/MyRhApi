@@ -100,8 +100,6 @@ public class AuthService {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        String role = userDetails.getAuthorities().iterator().next().getAuthority();
-
         String jwtToken = jwtService.generateToken(userDetails);
 
         AuthDto authDto = new AuthDto();

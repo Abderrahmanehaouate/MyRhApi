@@ -5,6 +5,7 @@ import com.youcode.myrhapi.models.Dtos.CompanyDto.CompanyDto;
 import com.youcode.myrhapi.models.Entities.VerifiedAccount;
 import com.youcode.myrhapi.services.interfaces.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

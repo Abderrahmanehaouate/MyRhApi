@@ -7,5 +7,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthDto {
     private String token;
-    private String role;
 }

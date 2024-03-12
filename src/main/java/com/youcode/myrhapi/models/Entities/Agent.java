@@ -23,8 +23,6 @@ public class Agent extends User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
-    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

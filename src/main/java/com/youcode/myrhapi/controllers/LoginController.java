@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/login")
 @CrossOrigin("*")
 public class LoginController {
+
     private final AuthService authService;
 
     public LoginController(AuthService authService) {
@@ -18,6 +19,7 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<AuthDto> login(@RequestBody LoginDto loginDto) {
+
         return ResponseEntity.ok(authService.login(loginDto));
     }
 }
